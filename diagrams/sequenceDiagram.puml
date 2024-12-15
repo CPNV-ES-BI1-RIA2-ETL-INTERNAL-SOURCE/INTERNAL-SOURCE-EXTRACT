@@ -1,0 +1,36 @@
+@startuml
+actor Client
+
+Client -> EndpointController : GET /endpoint?train_station={station}&day={day}
+activate EndpointController
+
+EndpointController -> PDFFetcher : fetch_pdf(train_station, day)
+activate PDFFetcher
+
+PDFFetcher -> ExternalAPI : GET /api/get-pdf?station={station}&date={day}
+activate ExternalAPI
+ExternalAPI --> PDFFetcher : PDF binary (bytes)
+deactivate ExternalAPI
+
+PDFFetcher --> EndpointController : PDF binary (bytes)
+deactivate PDFFetcher
+
+EndpointController -> OCRProcessor : extract_text(pdf_bytes)
+activate OCRProcessor
+
+OCRProcessor -> pdftotext : Execute "pdftotext -layout"
+activate pdftotext
+pdftotext --> OCRProcessor : Extracted raw text
+deactivate pdftotext
+
+OCRProcessor --> EndpointController : Raw text
+deactivate OCRProcessor
+
+EndpointController -> JSONFormatter : format(raw_text)
+activate JSONFormatter
+JSONFormatter --> EndpointController : JSON array
+deactivate JSONFormatter
+
+EndpointController --> Client : JSON response
+deactivate EndpointController
+@enduml
