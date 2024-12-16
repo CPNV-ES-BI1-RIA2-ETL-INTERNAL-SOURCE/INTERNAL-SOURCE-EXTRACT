@@ -23,7 +23,7 @@ class PDFFetcher:
         url = self.base_url.format(country=country, train_station=train_station)
 
         try:
-            response = requests.get(self.base_url, params=params)
+            response = requests.get(url, params=params, headers={"Accept": self.PDF_CONTENT_TYPE})
             response.raise_for_status()
 
             content_type = response.headers.get("Content-Type", "")
