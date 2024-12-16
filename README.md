@@ -15,6 +15,7 @@ List all dependencies and their version needed by the project as :
 * IDE used pycharm 2024.3 or later [download](https://www.jetbrains.com/pycharm/download/?section=windows)
 * Python 3.12 or later [official doc](https://www.python.org/downloads/)
 * Git version 2.47.1 or later [official doc](https://git-scm.com/)
+* Pipenv version 2024.4.0 or later [official doc](https://pipenv.pypa.io/en/latest/)
 
 ### Configuration
 
@@ -31,6 +32,10 @@ cp .env.example .env
 ````
 
 ### Run the project
+
+````shell
+pipenv shell
+````
 
 ````shell
 fastapi run
