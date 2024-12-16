@@ -1,21 +1,21 @@
 @startuml
 actor Client
 
-Client -> EndpointController : GET /endpoint?train_station={station}&day={day}
+Client -> EndpointController : GET /endpoint?train_station={station}&day={day}&country={country}
 activate EndpointController
 
-EndpointController -> PDFFetcher : fetch_pdf(train_station, day)
+EndpointController -> PDFFetcher : fetch_pdf(country, train_station, day)
 activate PDFFetcher
 
-PDFFetcher -> ExternalAPI : GET /api/get-pdf?station={station}&date={day}
+PDFFetcher -> ExternalAPI : GET /api/stationboard/{country}/{station}?date={day}
 activate ExternalAPI
-ExternalAPI --> PDFFetcher : PDF binary (bytes)
+ExternalAPI --> PDFFetcher : PDF string (str)
 deactivate ExternalAPI
 
-PDFFetcher --> EndpointController : PDF binary (bytes)
+PDFFetcher --> EndpointController : PDF string (str)
 deactivate PDFFetcher
 
-EndpointController -> OCRProcessor : extract_text(pdf_bytes)
+EndpointController -> OCRProcessor : extract_text(pdf_str)
 activate OCRProcessor
 
 OCRProcessor -> pdftotext : Execute "pdftotext -layout"
