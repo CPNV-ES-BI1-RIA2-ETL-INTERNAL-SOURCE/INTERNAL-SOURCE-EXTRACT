@@ -15,11 +15,12 @@ class PDFFetcher:
         if not self.base_url:
             raise ValueError("Environment variable 'PDF_API_BASE_URL' is not set or empty.")
 
-    def fetch_pdf(self, train_station: str, day: date) -> bytes:
+    def fetch_pdf(self, country: str, train_station: str, day: date) -> str:
         params = {
-            "station": train_station,
-            "date": day
+            "date": day.strftime("%m/%d/%Y"),
         }
+
+        url = self.base_url.format(country=country, train_station=train_station)
 
         try:
             response = requests.get(self.base_url, params=params)
