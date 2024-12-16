@@ -26,7 +26,7 @@ class PDFFetcher:
             response = requests.get(url, params=params, headers={"Accept": self.PDF_CONTENT_TYPE})
             response.raise_for_status()
 
-            content_type = response.headers.get("Content-Type", "")
+            content_type = response.headers.get("Content-Type")
             if not content_type.startswith(self.PDF_CONTENT_TYPE):
                 raise ValueError(f"Fetched content is not a valid PDF. Content-Type: {content_type}")
 
