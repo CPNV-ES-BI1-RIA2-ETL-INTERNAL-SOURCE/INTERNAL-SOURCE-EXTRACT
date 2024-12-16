@@ -3,7 +3,7 @@ import tempfile
 
 
 class OCRProcessor:
-    def extract_text(self, pdf_data: bytes) -> str:
+    def extract_text(self, pdf_data: str) -> str:
         try:
             with tempfile.NamedTemporaryFile(suffix=".pdf", delete=True) as temp_pdf:
                 temp_pdf.write(pdf_data)
