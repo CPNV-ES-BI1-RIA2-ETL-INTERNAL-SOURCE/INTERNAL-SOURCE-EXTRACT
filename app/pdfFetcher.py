@@ -15,17 +15,18 @@ class PDFFetcher:
         if not self.base_url:
             raise ValueError("Environment variable 'PDF_API_BASE_URL' is not set or empty.")
 
-    def fetch_pdf(self, train_station: str, day: date) -> bytes:
+    def fetch_pdf(self, country: str, train_station: str, day: date) -> str:
         params = {
-            "station": train_station,
-            "date": day
+            "date": day.strftime("%m/%d/%Y"),
         }
 
+        url = self.base_url.format(country=country, train_station=train_station)
+
         try:
-            response = requests.get(self.base_url, params=params)
+            response = requests.get(url, params=params, headers={"Accept": self.PDF_CONTENT_TYPE})
             response.raise_for_status()
 
-            content_type = response.headers.get("Content-Type", "")
+            content_type = response.headers.get("Content-Type")
             if not content_type.startswith(self.PDF_CONTENT_TYPE):
                 raise ValueError(f"Fetched content is not a valid PDF. Content-Type: {content_type}")
 
