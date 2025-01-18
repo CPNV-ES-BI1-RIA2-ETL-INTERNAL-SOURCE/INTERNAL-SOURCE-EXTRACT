@@ -16,6 +16,8 @@ RUN pip install --no-cache-dir pipenv && pipenv install --deploy --ignore-pipfil
 
 COPY . /app
 
+RUN pipenv run pytest
+
 EXPOSE 8000
 
 CMD ["pipenv", "run", "fastapi", "run"]
