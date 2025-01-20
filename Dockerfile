@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY Pipfile Pipfile.lock /app/
 
 ENV PIPENV_CUSTOM_VENV_NAME=extract
-RUN pip install --no-cache-dir pipenv && pipenv install --deploy --ignore-pipfile
+RUN pip install --no-cache-dir pipenv && pipenv install --deploy
 
 COPY . /app
 
