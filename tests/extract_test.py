@@ -28,7 +28,7 @@ def mock_pdf_fetcher():
 
 
 def test_can_extract_data_and_send_json(mock_pdf_fetcher):
-    response = client.get("/process-pdf/?train_station=Yverdon-les-bains&day=2024-12-09")
+    response = client.get("/api/v1/extract/?url=https%3A%2F%2Fs3.eu-south-1.amazonaws.com%2Fdev.data.generator.cld.education%2F2025-01-17%2F8504200.pdf%3FX-Amz-Algorithm%3DAWS4-HMAC-SHA256%26X-Amz-Credential%3DAKIA2KFJKL4O35LD5P3Z%252F20250122%252Feu-south-1%252Fs3%252Faws4_request%26X-Amz-Date%3D20250122T093428Z%26X-Amz-Expires%3D3600%26X-Amz-SignedHeaders%3Dhost%26X-Amz-Signature%3D199ad4b3a0387e8a86199f3494695f9a12d215ec3a058fa2a845d6915b8a725a")
 
     assert response.status_code == 200
     assert response.json() == EXPECTED_JSON
@@ -37,7 +37,7 @@ def test_can_extract_data_and_send_json(mock_pdf_fetcher):
 def test_pdf_not_existing(mock_pdf_fetcher):
     mock_pdf_fetcher.side_effect = ValueError("The pdf is not existing")
 
-    response = client.get("/process-pdf/?train_station=Lausanne&day=2024-12-10")
+    response = client.get("/api/v1/extract/?url=https%3A%2F%2Fs3.eu-south-1.amazonaws.com%2Fdev.data.generator.cld.education%2F2025-01-17%2F8504200.pdf%3FX-Amz-Algorithm%3DAWS4-HMAC-SHA256%26X-Amz-Credential%3DAKIA2KFJKL4O35LD5P3Z%252F20250122%252Feu-south-1%252Fs3%252Faws4_request%26X-Amz-Date%3D20250122T093428Z%26X-Amz-Expires%3D3600%26X-Amz-SignedHeaders%3Dhost%26X-Amz-Signature%3D199ad4b3a0387e8a86199f3494695f9a12d215ec3a058fa2a845d6915b8a725a")
 
     assert response.status_code == 400
     assert response.json() == {"detail": "The pdf is not existing"}
@@ -46,7 +46,7 @@ def test_pdf_not_existing(mock_pdf_fetcher):
 def test_invalid_pdf(mock_pdf_fetcher):
     mock_pdf_fetcher.side_effect = ValueError("Fetched content is not a PDF.")
 
-    response = client.get("/process-pdf/?train_station=Yverdon-les-bains&day=2024-12-09")
+    response = client.get("/api/v1/extract/?url=https%3A%2F%2Fs3.eu-south-1.amazonaws.com%2Fdev.data.generator.cld.education%2F2025-01-17%2F8504200.pdf%3FX-Amz-Algorithm%3DAWS4-HMAC-SHA256%26X-Amz-Credential%3DAKIA2KFJKL4O35LD5P3Z%252F20250122%252Feu-south-1%252Fs3%252Faws4_request%26X-Amz-Date%3D20250122T093428Z%26X-Amz-Expires%3D3600%26X-Amz-SignedHeaders%3Dhost%26X-Amz-Signature%3D199ad4b3a0387e8a86199f3494695f9a12d215ec3a058fa2a845d6915b8a725a")
 
     assert response.status_code == 400
     assert response.json() == {"detail": "Fetched content is not a PDF."}
