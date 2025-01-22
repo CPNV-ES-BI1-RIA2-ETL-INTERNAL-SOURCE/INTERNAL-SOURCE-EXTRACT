@@ -13,7 +13,7 @@ ocr_processor = OCRProcessor()
 json_formatter = JSONFormatter()
 
 
-@api_router.get("/process-pdf", response_model=list)
+@api_router.get("/api/v1/extract", response_model=list)
 async def process_pdf(url: str):
     try:
         pdf_data = pdf_fetcher.fetch_pdf(url)
