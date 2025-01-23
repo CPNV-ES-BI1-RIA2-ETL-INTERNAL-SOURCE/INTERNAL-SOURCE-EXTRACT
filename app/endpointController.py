@@ -14,9 +14,9 @@ json_formatter = JSONFormatter()
 
 
 @api_router.get("/api/v1/extract", response_model=list)
-async def process_pdf(url: str):
+async def process_pdf(file: str):
     try:
-        pdf_data = pdf_fetcher.fetch_pdf(url)
+        pdf_data = pdf_fetcher.fetch_pdf(file)
 
         extracted_text = ocr_processor.extract_text(pdf_data)
 
