@@ -1,13 +1,13 @@
 @startuml
 actor Client
 
-Client -> EndpointController : GET /endpoint?train_station={station}&day={day}&country={country}
+Client -> EndpointController : GET /endpoint?file={file_url}&status={status}&validity_duration={seconds}
 activate EndpointController
 
-EndpointController -> PDFFetcher : fetch_pdf(country, train_station, day)
+EndpointController -> PDFFetcher : fetch_pdf(url)
 activate PDFFetcher
 
-PDFFetcher -> ExternalAPI : GET /api/stationboard/{country}/{station}?date={day}
+PDFFetcher -> ExternalAPI : GET {url} (PDF file on any web server)
 activate ExternalAPI
 ExternalAPI --> PDFFetcher : PDF string (str)
 deactivate ExternalAPI
