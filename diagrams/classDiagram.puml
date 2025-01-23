@@ -2,11 +2,11 @@
 skinparam classAttributeIconSize 0
 
 class EndpointController {
-    + handle_request(country: str, train_station: str, day: date) : Response
+    + process_pdf(file: str) : Response
 }
 
 class PDFFetcher {
-    + fetch(country: str, train_station: str, day: date) : bytes
+    + fetch(file: str) : str
 }
 
 class OCRProcessor {
