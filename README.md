@@ -33,6 +33,8 @@ cp .env.example .env
 
 ### Run the project
 
+#### On local
+
 ````shell
 pipenv shell
 ````
@@ -40,6 +42,12 @@ pipenv shell
 ````shell
 fastapi run
 ````
+
+#### On docker
+
+```shell
+docker build -t internal-source-extract . -p 8000:8000
+```
 
 ### Test the project
 
