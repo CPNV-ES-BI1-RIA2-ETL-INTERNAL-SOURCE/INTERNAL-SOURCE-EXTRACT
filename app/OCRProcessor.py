@@ -21,6 +21,7 @@ class OCRProcessor:
         except subprocess.CalledProcessError as e:
             raise ValueError(f"Failed to extract text from PDF. Error: {e.stderr.strip()}")
 
+        //TODO Catch an exception and then lift the same exception... what's the point?
         except FileNotFoundError:
             raise FileNotFoundError(
                 "The 'pdftotext' tool is not installed or not found in your system's PATH. "

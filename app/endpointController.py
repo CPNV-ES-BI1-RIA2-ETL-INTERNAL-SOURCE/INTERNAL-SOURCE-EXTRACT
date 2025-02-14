@@ -12,7 +12,7 @@ pdf_fetcher = PDFFetcher()
 ocr_processor = OCRProcessor()
 json_formatter = JSONFormatter()
 
-
+# TODO Route name adapted according to REST (resource naming convention)
 @api_router.get("/api/v1/extract", response_model=list)
 async def process_pdf(file: str):
     try:
@@ -27,4 +27,5 @@ async def process_pdf(file: str):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception:
+        # TODO You trans type a generic exception into an http exception. Very bad idea. Losing information...
         raise HTTPException(status_code=500, detail="An internal server error occurred.")
