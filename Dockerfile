@@ -1,25 +1,39 @@
-FROM python:3.13-slim
+FROM python:3.13-alpine AS builder
 
-WORKDIR /app
+WORKDIR /service
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
-    build-essential \
-    poppler-utils \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache poppler-utils
 
-COPY Pipfile Pipfile.lock /app/
+COPY Pipfile Pipfile.lock ./
 
-ENV PIPENV_CUSTOM_VENV_NAME=extract
-RUN pip install --no-cache-dir pipenv && pipenv install --deploy
+RUN pip install --no-cache-dir --no-input pipenv
+RUN pipenv install --system --deploy
 
-COPY . /app
+# Test
+FROM builder AS test
+WORKDIR /service
 
-# Uncomment the following line when this issue is resolved:
-# https://github.com/CPNV-ES-BI1-RIA2-ETL-INTERNAL-SOURCE/INTERNAL-SOURCE-EXTRACT/issues/8
-# RUN pipenv run pytest
+COPY tests ./tests
+
+RUN pipenv install --system --deploy --dev
+RUN python -m pytest
+
+# Runtime
+FROM python:3.13-alpine AS runtime
+
+ARG PDF_API_BASE_URL
+ENV PDF_API_BASE_URL=${PDF_API_BASE_URL}
+
+RUN apk add --no-cache poppler-utils
+
+WORKDIR /service
+
+RUN mkdir /service/.venv
+
+COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
+COPY main.py ./
+COPY app ./app
 
 EXPOSE 8000
 
-CMD ["pipenv", "run", "fastapi", "run"]
+CMD ["python", "-m", "fastapi", "run", "main.py", "--port", "8000"]
