@@ -14,6 +14,7 @@ FROM builder AS test
 WORKDIR /service
 
 COPY tests ./tests
+COPY app ./app
 
 RUN pipenv install --system --deploy --dev
 RUN python -m pytest
@@ -32,7 +33,6 @@ RUN mkdir /service/.venv
 
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY main.py ./
-COPY app ./app
 
 EXPOSE 8000
 
