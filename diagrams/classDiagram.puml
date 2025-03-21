@@ -1,23 +1,91 @@
 @startuml
 skinparam classAttributeIconSize 0
-
-class EndpointController {
-    + process_pdf(file: str) : Response
+skinparam packageStyle rectangle
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
 }
 
-class PDFFetcher {
-    + fetch(file: str) : str
+package "API Layer" {
+    class EndpointController {
+        - pdfFetcher: PDFFetcher
+        - ocrProcessor: OCRProcessor
+        - textLineFormatter: TextLineFormatter
+        + processPdf(file: String): Response
+    }
 }
 
-class OCRProcessor {
-    + extract_text(pdf_data: str) : str
+package "Core" {
+    class PDFFetcher {
+        - pdf2textPath: String
+        + fetch(file: String): String
+        - validateFile(file: String): Boolean
+    }
+
+    class OCRProcessor {
+        + extractText(pdfData: String): String
+        - cleanText(text: String): String
+    }
+
+    class TextLineFormatter {
+        + format(text: String): Map<String, Object>
+        - validateFormat(data: Map<String, Object>): Boolean
+    }
 }
 
-class JSONFormatter {
-    + format(text: str) : dict
+package "Configuration" {
+    class Config {
+        + pdf2textPath: String
+        + load(): void
+    }
 }
 
-EndpointController --> PDFFetcher
-EndpointController --> OCRProcessor
-EndpointController --> JSONFormatter
+package "Models" {
+    class PDFResponse {
+        + status: String
+        + validityDuration: Integer
+        + content: List<String>
+    }
+}
+
+package "Exceptions" {
+    class PDFProcessingError
+    class ConfigurationError
+    class ValidationError
+}
+
+package "Framework" {
+    class FastAPI {
+    }
+
+    class Response {
+        + statusCode: Integer
+        + content: Map<String, Object>
+    }
+}
+
+package "External" {
+    class "PDF2Text" as PDF2Text <<external>>
+    class "FastAPI Framework" as FastAPIFramework <<external>>
+}
+
+' Relationships
+EndpointController *-- PDFFetcher
+EndpointController *-- OCRProcessor
+EndpointController *-- TextLineFormatter
+EndpointController ..> Response
+EndpointController ..> PDFResponse
+FastAPI ..> EndpointController
+
+PDFFetcher ..> PDF2Text
+FastAPI ..> FastAPIFramework
+
+Config ..> PDFFetcher
+Config ..> PDFProcessingError
+Config ..> ConfigurationError
+
+EndpointController ..> PDFProcessingError
+EndpointController ..> ValidationError
+
 @enduml
