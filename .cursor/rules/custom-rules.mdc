@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+---
+
+<RULES>
+You have to work on the following tasks but to do so you MUST follow these developpemnts rules.
+1. You MUST make atomic commit during all the dev process. Follow strictly the conventionnal commit conventions: @https://www.conventionalcommits.org/en/v1.0.0/ 
+2. You MUST refactor the entire codebase by following the SOLID princilples: @https://www.freecodecamp.org/news/solid-principles-explained-in-plain-english/ 
+3. You MUST act with the mindset of uncle Bob!!!
+4. You MUST follow an agile workflow (@https://asana.com/fr/resources/agile-methodology). It means that, you have to write code, test it and refactor it iteratively in order to write the cleanest code possible. 
+</RULES>
