@@ -1,0 +1,53 @@
+@startuml
+actor Client
+
+Client -> EndpointController : GET /api/v1/pdf?file={file_url}
+activate EndpointController
+
+EndpointController -> Config : load()
+activate Config
+Config --> EndpointController : config
+deactivate Config
+
+EndpointController -> PDFFetcher : fetch_pdf(url)
+activate PDFFetcher
+
+alt File exists
+    PDFFetcher -> PDF2Text : Execute "pdftotext -layout"
+    activate PDF2Text
+    PDF2Text --> PDFFetcher : PDF string (str)
+    deactivate PDF2Text
+else File not found
+    PDFFetcher --> EndpointController : PDFProcessingError
+    deactivate PDFFetcher
+    EndpointController --> Client : 404 Not Found
+    deactivate EndpointController
+    return
+end
+
+PDFFetcher --> EndpointController : PDF string (str)
+deactivate PDFFetcher
+
+EndpointController -> OCRProcessor : extract_text(pdf_str)
+activate OCRProcessor
+
+OCRProcessor -> OCRProcessor : __clean_text()
+OCRProcessor --> EndpointController : Cleaned text
+deactivate OCRProcessor
+
+EndpointController -> TextLineFormatter : format(cleaned_text)
+activate TextLineFormatter
+
+TextLineFormatter -> TextLineFormatter : __validate_format()
+TextLineFormatter --> EndpointController : Formatted text lines
+deactivate TextLineFormatter
+
+EndpointController -> PDFResponse : create(status, validity_duration, content)
+activate PDFResponse
+PDFResponse --> EndpointController : response object
+deactivate PDFResponse
+
+EndpointController --> Client : JSON response
+deactivate EndpointController
+
+@enduml

@@ -1,0 +1,10 @@
+[
+    "Gare de Lausanne",
+    "État au 12/12/24",
+    "Heure de départ   Ligne   Destination   Vias                                                                                                                               Voie",
+    "0 02              R       Palézieux     Pully-Nord, La Conversion, Grandvaux, Puidoux, Moreillon, Palézieux                                                                1",
+    "0 14              IC 5    Biel/Bienne   Yverdon-les-Bains, Neuchâtel, Biel/Bienne                                                                                          5",
+    "0 17              R       Vallorbe      Prilly-Malley, Renens VD, Bussigny, Vufflens-la-Ville, Cossonay-Penthalaz, La Sarraz, Arnex, Croy-Romainmôtier, Le Day, Vallorbe   8",
+    "0 25              IR      Sion          Vevey, Montreux, Aigle, Bex, St-Maurice, Martigny, Sion                                                                            3",
+    "0 25              RE      Genève        Renens VD, Morges, Allaman, Rolle, Gland, Nyon, Coppet, Genève                                                                     7"
+] 
