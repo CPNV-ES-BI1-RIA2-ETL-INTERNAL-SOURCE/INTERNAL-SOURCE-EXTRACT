@@ -55,12 +55,7 @@ The aim of this project is to create an **extract** component in an [ELT](https:
    ✓ Success!
    ```
 
-6. Copy and modify the environment file:
-   ```shell
-   cp .env.example .env
-   ```
-
-7. Validate installation:
+6. Validate installation:
    ```shell
    pipenv run python -c "import fastapi; print(f'FastAPI version: {fastapi.__version__}')"
    ```
