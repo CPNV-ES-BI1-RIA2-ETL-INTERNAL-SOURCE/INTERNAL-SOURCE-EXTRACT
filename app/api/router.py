@@ -93,6 +93,6 @@ async def extract_document_text(
     try:
         controller = EndpointController()
         text_lines = controller.process_pdf(file)
-        return PDFResponse(data=text_lines)
+        return PDFResponse.model_validate(text_lines)
     except Exception as e:
         raise handle_exception(e) 
