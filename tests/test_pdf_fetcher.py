@@ -7,8 +7,7 @@ import requests
 class TestPDFFetcher:
     @pytest.fixture
     def pdf_fetcher(self):
-        with patch.dict('os.environ', {'PDF_API_BASE_URL': 'http://example.com'}):
-            return PDFFetcher()
+        return PDFFetcher()
 
     def test_fetch_valid_pdf(self, pdf_fetcher, sample_pdf_content):
         with patch("app.core.pdf_fetcher.requests.get") as mock_get:
@@ -67,9 +66,4 @@ class TestPDFFetcher:
             with pytest.raises(PDFTimeoutError) as exc_info:
                 pdf_fetcher.fetch_pdf("http://example.com/test.pdf")
             assert "PDF fetch operation timed out" in str(exc_info.value)
-            assert "timeout" in exc_info.value.details
-
-    def test_default_base_url(self):
-        with patch.dict('os.environ', {'PDF_API_BASE_URL': ''}):
-            fetcher = PDFFetcher()
-            assert fetcher.settings.pdf_api_base_url == "http://localhost:8000" 
+            assert "timeout" in exc_info.value.details 

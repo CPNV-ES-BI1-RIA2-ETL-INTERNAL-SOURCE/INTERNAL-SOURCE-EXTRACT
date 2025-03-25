@@ -55,12 +55,7 @@ The aim of this project is to create an **extract** component in an [ELT](https:
    ✓ Success!
    ```
 
-6. Copy and modify the environment file:
-   ```shell
-   cp .env.example .env
-   ```
-
-7. Validate installation:
+6. Validate installation:
    ```shell
    pipenv run python -c "import fastapi; print(f'FastAPI version: {fastapi.__version__}')"
    ```
@@ -74,17 +69,24 @@ The aim of this project is to create an **extract** component in an [ELT](https:
 ```
 internal-source-extract/
 ├── app/                    
-│   ├── api/                # API endpoints ([FastAPI](https://fastapi.tiangolo.com/))
-│   ├── core/               
-│   ├── models/             
-│   ├── services/           
-│   └── utils/              
-├── tests/                  # Test files
-├── .env.example            # Example environment variables
-├── Dockerfile              # [Docker](https://www.docker.com/) configuration
-├── Pipfile                 # Dependencies ([Pipenv](https://pipenv.pypa.io/))
-├── Pipfile.lock            
-└── README.md               # Project documentation
+│   ├── api/                # API endpoints
+│   ├── core/               # Core functionality
+│   ├── responses/          # Response models and handlers
+│   ├── __init__.py
+│   ├── config.py          
+│   ├── exceptions.py      
+│   └── schemas.py         
+├── tests/                  
+├── diagrams/              
+├── .github/               
+├── .dockerignore         
+├── .gitignore            
+├── Dockerfile            
+├── LICENSE               
+├── Pipfile              
+├── Pipfile.lock         
+├── README.md            
+└── main.py              
 ```
 
 ## Running the Application

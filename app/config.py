@@ -6,12 +6,6 @@ from typing import Optional
 class Settings(BaseModel):
     """Application settings."""
     
-    # API Configuration
-    pdf_api_base_url: str = "http://localhost:8000"
-    
-    # OCR Configuration
-    pdftotext_path: str = "pdftotext"
-    
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",

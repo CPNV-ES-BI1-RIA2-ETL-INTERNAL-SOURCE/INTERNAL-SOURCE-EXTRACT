@@ -22,9 +22,6 @@ RUN python -m pytest
 # Runtime
 FROM python:3.13-alpine AS runtime
 
-ARG PDF_API_BASE_URL
-ENV PDF_API_BASE_URL=${PDF_API_BASE_URL}
-
 RUN apk add --no-cache poppler-utils
 
 WORKDIR /service
@@ -33,6 +30,7 @@ RUN mkdir /service/.venv
 
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY main.py ./
+COPY app ./app
 
 EXPOSE 8000
 
