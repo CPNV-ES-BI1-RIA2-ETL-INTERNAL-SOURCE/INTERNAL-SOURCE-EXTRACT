@@ -52,13 +52,13 @@ class PDFFetcher:
         
         # Validate content type
         content_type = response.headers.get("Content-Type", "")
-        if not content_type.startswith("application/pdf"):
+        if not content_type.startswith("binary/octet-stream"):
             raise PDFInvalidContentTypeError(
                 message="Invalid content type",
                 details={
                     "url": url,
                     "content_type": content_type,
-                    "expected": "application/pdf"
+                    "expected": "binary/octet-stream"
                 }
             )
             

@@ -14,7 +14,7 @@ class TestPDFFetcher:
             mock_response = Mock()
             mock_response.content = sample_pdf_content
             mock_response.status_code = 200
-            mock_response.headers = {"Content-Type": "application/pdf"}
+            mock_response.headers = {"Content-Type": "binary/octet-stream"}
             mock_get.return_value = mock_response
 
             result = pdf_fetcher.fetch_pdf("http://example.com/test.pdf")
