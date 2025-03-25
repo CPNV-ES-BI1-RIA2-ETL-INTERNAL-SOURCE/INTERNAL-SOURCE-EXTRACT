@@ -67,7 +67,7 @@ class TestExtractEndpoint:
         
         # Verify response
         assert response.status_code == status.HTTP_200_OK
-        assert response.json() == {"data": test_data}
+        assert response.json() == test_data
 
     def test_extract_validation_errors(self, test_client):
         """Test input validation error scenarios."""

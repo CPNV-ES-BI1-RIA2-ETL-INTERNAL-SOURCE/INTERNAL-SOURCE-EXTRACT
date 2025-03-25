@@ -1,10 +1,11 @@
 """API schemas."""
 from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, RootModel
 
-class PDFResponse(BaseModel):
+
+class PDFResponse(RootModel):
     """Response model for PDF text extraction."""
-    data: List[str]
+    root: List[str]
 
 class ErrorDetail(BaseModel):
     """Detailed error information."""
@@ -14,4 +15,4 @@ class ErrorDetail(BaseModel):
 
 class ErrorResponse(BaseModel):
     """Standard error response."""
-    error: ErrorDetail 
+    error: ErrorDetail
